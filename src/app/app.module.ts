@@ -17,7 +17,9 @@ import{MatDialogModule} from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { FormsModule ,ReactiveFormsModule } from '@angular/forms';
-import{MatListModule} from '@angular/material/list'
+import{MatListModule} from '@angular/material/list';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import{MatListModule} from '@angular/material/list'
     MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
-    MatListModule
+    MatListModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
