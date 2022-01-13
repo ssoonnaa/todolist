@@ -5,10 +5,7 @@ export interface todolists{
   mylists:String;
 }
 const elementdata:todolists[]=[
-  {
-    mylists:''
-  }
-  
+
 ]
 
 @Component({
@@ -26,9 +23,9 @@ export class AppComponent {
     //this.typesOfLists=this.todolistForm.value.mylist
     //console.log(this.todolistForm.value);
     this.typesOfLists.push(this.todolistForm.value.mylist);
-    console.log("list are", this.typesOfLists)
+    console.log({item: this.typesOfLists,id:this.typesOfLists.length})
     }
-    delete(){
-      
+    delete(){ 
+           this.typesOfLists=this.typesOfLists.filter(item=>this.typesOfLists.length!==this.typesOfLists.length)
     }
   }
