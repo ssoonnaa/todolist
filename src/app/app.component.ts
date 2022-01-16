@@ -69,7 +69,7 @@ export class AppComponent implements OnInit{
    }
       
     delete(){
-      //this.elementdata=this.elementdata.filter(item=>this.elementdata.length!==this.elementdata.length)
+      this.elementdata=this.elementdata.filter(item=>this.elementdata.length!==this.elementdata.length)
 
       this.myform.mylist=this.todolistForm.value.mylist ;
       console.log("eeeeee"+this.myform.mylist)
