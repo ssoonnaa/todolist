@@ -19,6 +19,8 @@ import { MatToolbarModule} from '@angular/material/toolbar';
 import { FormsModule ,ReactiveFormsModule } from '@angular/forms';
 import{MatListModule} from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -44,7 +46,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     ReactiveFormsModule,
     MatListModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HttpClientModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

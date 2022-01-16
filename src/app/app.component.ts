@@ -1,42 +1,47 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { LocalStorageService } from './local-storage.service';
+import { OnInit } from '@angular/core';
 export interface todolists{
-
-  mylists:String;
+mylists:''
 }
-const elementdata:todolists[]=[
 
-]
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'todolist';
-  user:any={};
+  elementdata:todolists[]=[
+
+  ]
+  myform = {
+    mylist: '',
+  }
+  constructor(private localStorageService: LocalStorageService){}
+  public result : string | undefined;
  todolistForm = new FormGroup({
     mylist: new FormControl('', [Validators.required]),
   });
-  typesOfLists=elementdata
-  save(){
-    //this.typesOfLists=this.todolistForm.value.mylist
-    //console.log(this.todolistForm.value);
-    this.typesOfLists.push(this.todolistForm.value.mylist);
-    console.log({item: this.typesOfLists,id:this.typesOfLists.length})
   
+  save(){
+
+   this.elementdata.push(this.todolistForm.value.mylist);
+    console.log({item: this.elementdata,id:this.elementdata.length});
+    localStorage.setItem('mydata',JSON.stringify(this.todolistForm.value));
+    this.result=JSON.parse(localStorage.getItem('mydata')|| '{}');
+    console.log(this.result);
     fetch('http://localhost:5002/api/todo/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      // body: JSON.stringify(this.user)
 
-      body: JSON.stringify(this.typesOfLists)
+      body: JSON.stringify(this.todolistForm.value)
 
     }).then(function (res: any) {
-      //console.log("DDDDDDDDD" + res.status);
       if (res.status == 200) {
         console.log("data added successfully");
       }
@@ -46,15 +51,46 @@ export class AppComponent {
         })
       }
     })
-      /*this.user=localStorage.setItem('mydata',JSON.stringify(this.todolistForm.value));
-    this.addmultipleuser(this.user);
+    
+  
+  }
+  
+   ngOnInit(): void {
+     this.localStorageService.getUsers().subscribe(
+      (res:any ) => {
+        this.elementdata=Object.values(res);
+        console.log("ppppppppppp",this.elementdata);
+      },
+      (err:any)=>{
+        console.log(err);
       }
-    addmultipleuser(userss: any){
+      )
       
-     let users =JSON.parse(localStorage.getItem('mydata')|| '{}');
-  */
+   }
+      
+    delete(){
+      //this.elementdata=this.elementdata.filter(item=>this.elementdata.length!==this.elementdata.length)
+
+      this.myform.mylist=this.todolistForm.value.mylist ;
+      console.log("eeeeee"+this.myform.mylist)
+    fetch("http://localhost:5002/api/todo/delete/" + this.myform.mylist, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
       }
-    delete(){ 
-           this.typesOfLists=this.typesOfLists.filter(item=>this.typesOfLists.length!==this.typesOfLists.length)
-    }
+    }).then(
+      function (res) {
+        if (res.status == 200) {
+          console.log("Record is deleted successfully");
+        }
+        else {
+          res.json().then(function (data) {
+            alert("something went wrong " + res.status);
+          })
+        }
+
+      })
+    console.log(this.todolistForm.value);
+  }
+    //}
   }
